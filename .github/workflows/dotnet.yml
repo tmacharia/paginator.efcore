@@ -26,6 +26,9 @@ jobs:
       with:
         PROJECT_FILE_PATH: Paginator.EntityFrameworkCore.csproj
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-    - name: Github Package
+    - name: Add Github Nuget Source
       run: dotnet nuget add source --username tmacharia --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/tmacharia/index.json"
-         
+    - name: Pack
+      run: dotnet pack -c Release
+    - name: Publish Github Package
+      run: dotnet nuget push "bin/Release/Paginator.EntityFrameworkCore.*.nupkg" --source "github"
