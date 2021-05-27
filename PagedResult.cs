@@ -46,5 +46,14 @@ namespace Paginator.EntityFrameworkCore
         {
             return System.HashCode.Combine(Page, ItemsPerPage, TotalPages, TotalItems, Items);
         }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format("Page: {0:N0} Perpage: {1:N0} Totalpages: {2:N0} TotalItems: {3:N0}", Page, ItemsPerPage, TotalPages, TotalItems);
+        }
     }
 }
