@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	  <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <Authors>Timothy Macharia</Authors>
+	  <Company>Neon Clouds</Company>
+	  <Product>Paginator.EntityFrameworkCore</Product>
+	  <Title>Paginator.EntityFrameworkCore</Title>
+	  <PackageProjectUrl>https://github.com/tmacharia/paginator.efcore</PackageProjectUrl>
+	  <Copyright>© Neon Clouds, 2021</Copyright>
+	  <RepositoryUrl>https://github.com/tmacharia/paginator.efcore</RepositoryUrl>
+	  <PackageTags>linq, pagination, paginator, paging, efcore</PackageTags>
+	  <PackageId>Paginator.EntityFrameworkCore</PackageId>
+	  <Version>3.1.5-beta</Version>
+	  <NeutralLanguage>en</NeutralLanguage>
+	  <PackageLicenseUrl></PackageLicenseUrl>
+	  <RepositoryType>git</RepositoryType>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <Description>
+		  Asynchronous pagination of queries to your data store using EntityFrameworkCore.
+	  </Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.15" />
+  </ItemGroup>
+
+</Project>
