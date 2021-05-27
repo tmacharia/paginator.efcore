@@ -17,12 +17,20 @@
 	  <NeutralLanguage>en</NeutralLanguage>
 	  <PackageLicenseUrl></PackageLicenseUrl>
 	  <RepositoryType>git</RepositoryType>
+	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <Description>
 		  Asynchronous pagination of queries to your data store using EntityFrameworkCore.
 	  </Description>
   </PropertyGroup>
-
+	
+  <ItemGroup>
+    <None Include=".\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+	
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.15" />
   </ItemGroup>
