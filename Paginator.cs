@@ -51,7 +51,9 @@ namespace Paginator.EntityFrameworkCore
         {
             int total = 0;
             var list = new List<TEntity>();
-            
+
+            token.ThrowIfCancellationRequested();
+
             if (!skipCount)
                 total = await query.CountEntitiesAsync(token);
 
