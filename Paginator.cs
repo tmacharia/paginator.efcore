@@ -26,6 +26,7 @@ namespace Paginator.EntityFrameworkCore
         /// <param name="skipCount">Specify whether to omit running a count operation on your query againt the data store.</param>
         /// <param name="token">Cancellation token.</param>
         /// <returns>A task that represents the asynchronous operation which you can await.</returns>
+        /// <exception cref="ArgumentNullException"/>
         /// <exception cref="OperationCanceledException"/>
         public static Task<PagedResult<TEntity>> PaginateAsync<TEntity>(this IQueryable<TEntity> query,
             int page = DEF_PAGE, int perpage = DEF_PERPAGE, bool skipCount = DEF_SKIPCOUNT, CancellationToken token = default)
@@ -40,7 +41,7 @@ namespace Paginator.EntityFrameworkCore
         /// <param name="perpage">Items per page.</param>
         /// <param name="skipCount">Specify whether to omit running a count operation on your query againt the data store.</param>
         /// <returns>A <see cref="PagedResult{TEntity}"/> response object.</returns>
-        /// <exception cref="OperationCanceledException"/>
+        /// <exception cref="ArgumentNullException"/>
         public static PagedResult<TEntity> Paginate<TEntity>(this IQueryable<TEntity> query,
             int page = DEF_PAGE, int perpage = DEF_PERPAGE, bool skipCount = DEF_SKIPCOUNT)
             where TEntity : class
