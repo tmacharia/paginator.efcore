@@ -13,16 +13,22 @@
 	  <RepositoryUrl>https://github.com/tmacharia/paginator.efcore</RepositoryUrl>
 	  <PackageTags>linq, pagination, paginator, paging, efcore</PackageTags>
 	  <PackageId>Paginator.EntityFrameworkCore</PackageId>
-	  <Version>3.1.5-rc</Version>
+	  <Version>3.1.15-rc</Version>
 	  <NeutralLanguage>en</NeutralLanguage>
 	  <PackageLicenseUrl></PackageLicenseUrl>
 	  <RepositoryType>git</RepositoryType>
 	  <PackageLicenseFile>LICENSE</PackageLicenseFile>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <Description>
-		  Asynchronous pagination of queries to your data store using EntityFrameworkCore.
+		  Asynchronous &amp; Synchronous pagination of queries to your data store using EntityFrameworkCore. With the help of some simple to use extension methods, querying portions/chunks of data just gets easier.
 	  </Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="tests\**" />
+    <EmbeddedResource Remove="tests\**" />
+    <None Remove="tests\**" />
+  </ItemGroup>
 	
   <ItemGroup>
     <None Include=".\LICENSE">
