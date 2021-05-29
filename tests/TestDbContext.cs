@@ -6,8 +6,12 @@ namespace tests
     {
         public TestDbContext(DbContextOptions<TestDbContext> options)
             :base(options)
-        {
+        { }
 
-        }
+        public DbSet<Car> Cars { get; set; }
+    }
+    internal class Car
+    {
+        public int Id { get; set; }
     }
 }

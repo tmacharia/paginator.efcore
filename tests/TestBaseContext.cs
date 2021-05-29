@@ -27,6 +27,16 @@ namespace tests
                 return _context;
             }
         }
+
+
+        internal T Add<T>(T obj, bool save = true)
+            where T : class
+        {
+            obj = Context.Add(obj).Entity;
+            if (save)
+                Save();
+            return obj;
+        }
         protected void Save() => Context.SaveChanges();
     }
 }
