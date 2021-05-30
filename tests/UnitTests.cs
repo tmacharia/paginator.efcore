@@ -1,6 +1,7 @@
 using System.Linq;
 using Paginator.EntityFrameworkCore;
 using NUnit.Framework;
+using System;
 
 namespace tests
 {
@@ -13,7 +14,7 @@ namespace tests
 
         [Test]
         [Order(0)]
-        public void Normal_Paginate_Empty()
+        public void Pg_Empty()
         {
             var list = Context.Cars.Paginate(1, 10);
             Assert.IsNotNull(list);
@@ -22,7 +23,7 @@ namespace tests
 
         [Test]
         [Order(1)]
-        public void Paginate_With_Items()
+        public void Pg_With_Items()
         {
             Add(new Car());
             Add(new Car());
@@ -37,7 +38,7 @@ namespace tests
 
         [Test]
         [Order(2)]
-        public void Paginate_Skip_Count()
+        public void Pg_Skip_Count()
         {
             Add(new Car());
             Add(new Car());
@@ -48,6 +49,19 @@ namespace tests
             Assert.IsNotNull(list);
             Assert.AreEqual(2, list.TotalItems);
             Assert.AreEqual(1, list.TotalPages);
+        }
+        [Test]
+        [Order(2)]
+        public void Pg_Invalid_PageParam_ThrowEx()
+        {
+            Assert.Throws<ArgumentException>(() => Context.Cars.Paginate(0, 2));
+            Assert.Throws<ArgumentException>(() => Context.Cars.Paginate(-1, 2));
+        }
+        [Test]
+        [Order(2)]
+        public void Pg_Invalid_PerPageParam_ThrowEx()
+        {
+            Assert.Throws<ArgumentException>(() => Context.Cars.Paginate(1, -1));
         }
     }
 }
