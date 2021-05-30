@@ -52,6 +52,8 @@ namespace Paginator.EntityFrameworkCore
         internal static async Task<PagedResult<TEntity>> ProcessPaginationAsync<TEntity>(this IQueryable<TEntity> query,
                     int page = DEF_PAGE, int perpage = DEF_PERPAGE, bool skipCount = DEF_SKIPCOUNT, CancellationToken token = default)
         {
+            ValidateParams_IfInvalid_Throw(page, perpage);
+
             int total = 0;
             var list = new List<TEntity>();
 
@@ -78,11 +80,7 @@ namespace Paginator.EntityFrameworkCore
         internal static PagedResult<TEntity> ProcessPagination<TEntity>(this IQueryable<TEntity> query,
                     int page = DEF_PAGE, int perpage = DEF_PERPAGE, bool skipCount = DEF_SKIPCOUNT)
         {
-            if (page <= 0)
-                throw new ArgumentException("Page parameter must be greater than zero.", nameof(page));
-
-            if (perpage < 0)
-                throw new ArgumentException("Per-page parameter must be 0 or greater than 0.", nameof(perpage));
+            ValidateParams_IfInvalid_Throw(page, perpage);
 
             int total = 0;
             var list = new List<TEntity>();
@@ -104,6 +102,17 @@ namespace Paginator.EntityFrameworkCore
                 TotalPages = CalculateTotalPages(total, perpage),
                 Items = list
             };
+        }
+
+        internal static void ValidateParams_IfInvalid_Throw(int page, int perpage)
+        {
+            if (page <= 0)
+                throw new ArgumentException("Page parameter must be greater than zero.", nameof(page));
+
+            if (perpage < 0)
+                throw new ArgumentException("Per-page parameter must be 0 or greater than 0.", nameof(perpage));
+
+            return;
         }
         internal static Task<int> CountEntitiesAsync<TEntity>(this IQueryable<TEntity> query, CancellationToken token = default)
         {
