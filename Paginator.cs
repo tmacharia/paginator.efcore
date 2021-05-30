@@ -26,6 +26,8 @@ namespace Paginator.EntityFrameworkCore
         /// <param name="skipCount">Specify whether to omit running a count operation on your query againt the data store.</param>
         /// <param name="token">Cancellation token.</param>
         /// <returns>A task that represents the asynchronous operation which you can await.</returns>
+        /// <exception cref="ArgumentException"/>
+        /// <exception cref="ArgumentNullException"/>
         /// <exception cref="OperationCanceledException"/>
         public static Task<PagedResult<TEntity>> PaginateAsync<TEntity>(this IQueryable<TEntity> query,
             int page = DEF_PAGE, int perpage = DEF_PERPAGE, bool skipCount = DEF_SKIPCOUNT, CancellationToken token = default)
@@ -40,7 +42,8 @@ namespace Paginator.EntityFrameworkCore
         /// <param name="perpage">Items per page.</param>
         /// <param name="skipCount">Specify whether to omit running a count operation on your query againt the data store.</param>
         /// <returns>A <see cref="PagedResult{TEntity}"/> response object.</returns>
-        /// <exception cref="OperationCanceledException"/>
+        /// <exception cref="ArgumentException"/>
+        /// <exception cref="ArgumentNullException"/>
         public static PagedResult<TEntity> Paginate<TEntity>(this IQueryable<TEntity> query,
             int page = DEF_PAGE, int perpage = DEF_PERPAGE, bool skipCount = DEF_SKIPCOUNT)
             where TEntity : class
@@ -49,6 +52,8 @@ namespace Paginator.EntityFrameworkCore
         internal static async Task<PagedResult<TEntity>> ProcessPaginationAsync<TEntity>(this IQueryable<TEntity> query,
                     int page = DEF_PAGE, int perpage = DEF_PERPAGE, bool skipCount = DEF_SKIPCOUNT, CancellationToken token = default)
         {
+            ValidateParams_IfInvalid_Throw(page, perpage);
+
             int total = 0;
             var list = new List<TEntity>();
 
@@ -75,6 +80,8 @@ namespace Paginator.EntityFrameworkCore
         internal static PagedResult<TEntity> ProcessPagination<TEntity>(this IQueryable<TEntity> query,
                     int page = DEF_PAGE, int perpage = DEF_PERPAGE, bool skipCount = DEF_SKIPCOUNT)
         {
+            ValidateParams_IfInvalid_Throw(page, perpage);
+
             int total = 0;
             var list = new List<TEntity>();
 
@@ -96,6 +103,17 @@ namespace Paginator.EntityFrameworkCore
                 Items = list
             };
         }
+
+        internal static void ValidateParams_IfInvalid_Throw(int page, int perpage)
+        {
+            if (page <= 0)
+                throw new ArgumentException("Page parameter must be greater than zero.", nameof(page));
+
+            if (perpage < 0)
+                throw new ArgumentException("Per-page parameter must be 0 or greater than 0.", nameof(perpage));
+
+            return;
+        }
         internal static Task<int> CountEntitiesAsync<TEntity>(this IQueryable<TEntity> query, CancellationToken token = default)
         {
             return query.CountAsync(token);
@@ -107,7 +125,6 @@ namespace Paginator.EntityFrameworkCore
             {
                 ans = totalItems / perpage;
                 ans += (totalItems % perpage) > 0 ? 1 : 0;
-                return ans;
             }
             return ans;
         }
