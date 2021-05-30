@@ -31,4 +31,4 @@ jobs:
     - name: Pack
       run: dotnet pack -c Release
     - name: Publish Github Package
-      run: dotnet nuget push "bin/Release/Paginator.EntityFrameworkCore.*.nupkg" --source "github"
+      run: dotnet nuget push "bin/Release/Paginator.EntityFrameworkCore.*.nupkg" --source "github" --skip-duplicate
