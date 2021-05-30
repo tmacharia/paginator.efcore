@@ -3,6 +3,7 @@ using Paginator.EntityFrameworkCore;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace tests
 {
@@ -104,6 +105,14 @@ namespace tests
         public void AsyncPg_Invalid_PerPageParam_ThrowEx()
         {
             Assert.ThrowsAsync<ArgumentException>(() => Context.Cars.PaginateAsync(1, -1));
+        }
+        [Test]
+        [Order(3)]
+        public void AsyncPg_CancelledToken_Throw()
+        {
+            var src = new CancellationTokenSource();
+            src.Cancel();
+            Assert.ThrowsAsync<OperationCanceledException>(() => Context.Cars.PaginateAsync(1, 2, token: src.Token));
         }
         #endregion
     }

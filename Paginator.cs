@@ -125,7 +125,6 @@ namespace Paginator.EntityFrameworkCore
             {
                 ans = totalItems / perpage;
                 ans += (totalItems % perpage) > 0 ? 1 : 0;
-                return ans;
             }
             return ans;
         }
