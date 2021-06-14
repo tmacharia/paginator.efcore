@@ -2,7 +2,7 @@
 
 namespace tests
 {
-    internal class TestBaseContext
+    internal class TestBaseContext : TestBase
     {
         private TestDbContext _context;
         private DbContextOptions<TestDbContext> DbContextOptions;
