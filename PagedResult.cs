@@ -53,7 +53,11 @@ namespace Paginator.EntityFrameworkCore
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("Page: {0:N0} Perpage: {1:N0} Totalpages: {2:N0} TotalItems: {3:N0}", Page, ItemsPerPage, TotalPages, TotalItems);
+            return string.Format("{0:N0} items, Pg {1:N0}/{2:N0}, Total: {3:N0}",
+                (Items != null && Items.Count > 0) ? Items.Count : ItemsPerPage,
+                Page,
+                TotalPages,
+                TotalItems);
         }
     }
 }
