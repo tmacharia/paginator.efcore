@@ -5,6 +5,7 @@ using System;
 namespace tests
 {
     [TestFixture]
+    //[SingleThreaded]
     internal class SynchronousTests : TestBaseContext
     {
         [SetUp]
@@ -56,6 +57,7 @@ namespace tests
             Log(paged);
         }
         [Order(2)]
+        [RequiresThread]
         [TestCase(Category = SYNC_TESTS)]
         public void Pg_With_Items()
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
 
 namespace tests
 {
@@ -9,7 +10,7 @@ namespace tests
 
         public TestBaseContext()
         { }
-
+        
         protected TestDbContext Context
         {
             get

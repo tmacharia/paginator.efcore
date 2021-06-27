@@ -36,7 +36,7 @@ namespace Paginator.EntityFrameworkCore
         /// <summary>
         /// Collection containing items in the current page.
         /// </summary>
-        public IList<T> Items { get; set; }
+        public List<T> Items { get; set; }
 
         /// <summary>
         /// Calculates &amp; returns the hashcode of the current object.

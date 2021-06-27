@@ -6,6 +6,7 @@ namespace tests
     {
         internal const string SYNC_TESTS = "Synchronous";
         internal const string ASYNC_TESTS = "Asynchronous";
+        internal const string SERIAL_TESTS = "Serialization";
 
         internal void Log(object obj)
             => Console.WriteLine(obj);

@@ -10,7 +10,7 @@ namespace tests
 
         public DbSet<Car> Cars { get; set; }
     }
-    internal class Car
+    public class Car
     {
         public int Id { get; set; }
     }

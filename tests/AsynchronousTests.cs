@@ -7,6 +7,7 @@ using System.Threading;
 namespace tests
 {
     [TestFixture]
+    [SingleThreaded]
     internal class AsynchronousTests : TestBaseContext
     {
         [SetUp]
