@@ -15,17 +15,19 @@ namespace tests
             get
             {
                 if (_context == null)
-                {
-                    DbContextOptions = new DbContextOptionsBuilder<TestDbContext>()
+                    InitContx();
+                return _context;
+            }
+        }
+        protected void InitContx()
+        {
+            DbContextOptions = new DbContextOptionsBuilder<TestDbContext>()
                         .UseInMemoryDatabase(databaseName: "test_db")
                         .EnableServiceProviderCaching(true)
                         .EnableSensitiveDataLogging(true)
                         .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll)
                         .Options;
-                    _context = new TestDbContext(DbContextOptions);
-                }
-                return _context;
-            }
+            _context = new TestDbContext(DbContextOptions);
         }
 
 
