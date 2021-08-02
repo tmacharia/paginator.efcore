@@ -6,10 +6,15 @@ using System.Threading;
 
 namespace tests
 {
+    [Order(1)]
     [TestFixture]
     [SingleThreaded]
     internal class AsynchronousTests : TestBaseContext
     {
+        public AsynchronousTests()
+        {
+            InitContx();
+        }
         [SetUp]
         public void Setup()
         {
@@ -49,10 +54,11 @@ namespace tests
             src.Cancel();
             Assert.ThrowsAsync<OperationCanceledException>(() => Context.Cars.PaginateAsync(1, 2, cancellationToken: src.Token));
         }
-        [Order(2)]
+        [Order(1)]
         [TestCase(Category = ASYNC_TESTS)]
         public async Task AsyncPg_Skip_Count()
         {
+            Add(new Car());
             Add(new Car());
             Add(new Car());
             Add(new Car());
@@ -61,26 +67,19 @@ namespace tests
             var paged = await Context.Cars.PaginateAsync(1, 2, true);
 
             Assert.IsNotNull(paged);
+            Assert.AreEqual(2, paged.TotalPages);
             Assert.AreEqual(2, paged.TotalItems);
-            Assert.AreEqual(1, paged.TotalPages);
 
-            Log(paged);
-        }
-        [Order(2)]
-        [TestCase(Category = ASYNC_TESTS)]
-        public async Task AsyncPg_With_Items()
-        {
-            int k = 5174;
-            for (int i = 0; i < k; i++)
-                Context.Add(new Car());
+            paged = await Context.Cars.PaginateAsync(2, 2, true);
 
-            Save();
+            Assert.AreEqual(3, paged.TotalPages);
+            Assert.AreEqual(4, paged.TotalItems);
 
-            var paged = await Context.Cars.PaginateAsync(35, 8);
+            paged = await Context.Cars.PaginateAsync(3, 2, true);
 
-            Assert.IsNotNull(paged);
-            Assert.AreEqual(k, paged.TotalItems);
-            Assert.AreEqual(647, paged.TotalPages);
+            Assert.AreEqual(1, paged.Items.Count);
+            Assert.AreEqual(3, paged.TotalPages);
+            Assert.AreEqual(5, paged.TotalItems);
 
             Log(paged);
         }
