@@ -87,7 +87,7 @@ namespace Paginator.EntityFrameworkCore
             if (skipCount)
                 total = list.Count;
 
-            return new PagedResult<TEntity>()
+            var paged = new PagedResult<TEntity>()
             {
                 Page = page,
                 ItemsPerPage = perpage,
@@ -95,6 +95,11 @@ namespace Paginator.EntityFrameworkCore
                 TotalPages = CalculateTotalPages(total, perpage),
                 Items = list
             };
+
+            if (skipCount)
+                paged = NonDeterministicEstimation(paged);
+
+            return paged;
         }
         internal static PagedResult<TEntity> ProcessPagination<TEntity>(this IQueryable<TEntity> query,
                     int page = DEF_PAGE, int perpage = DEF_PERPAGE, bool skipCount = DEF_SKIPCOUNT)
@@ -113,7 +118,7 @@ namespace Paginator.EntityFrameworkCore
             if (skipCount)
                 total = list.Count;
 
-            return new PagedResult<TEntity>()
+            var paged = new PagedResult<TEntity>()
             {
                 Page = page,
                 ItemsPerPage = perpage,
@@ -121,6 +126,11 @@ namespace Paginator.EntityFrameworkCore
                 TotalPages = CalculateTotalPages(total, perpage),
                 Items = list
             };
+
+            if (skipCount)
+                paged = NonDeterministicEstimation(paged);
+
+            return paged;
         }
 
 
@@ -138,6 +148,30 @@ namespace Paginator.EntityFrameworkCore
                 ans += (totalItems % perpage) > 0 ? 1 : 0;
             }
             return ans;
+        }
+        internal static PagedResult<TEntity> NonDeterministicEstimation<TEntity>(PagedResult<TEntity> paged)
+        {
+            if (paged.Page == 1)
+            {
+                if (paged.Items.Count == paged.ItemsPerPage)
+                {
+                    paged.TotalPages = paged.Page + 1;
+                }
+            }
+            else
+            {
+                if (paged.Items.Count == paged.ItemsPerPage)
+                {
+                    paged.TotalPages = paged.Page + 1;
+                    paged.TotalItems = paged.Page * paged.ItemsPerPage;
+                }
+                else
+                {
+                    paged.TotalPages = paged.Page;
+                    paged.TotalItems = ((paged.Page - 1) * paged.ItemsPerPage) + paged.Items.Count;
+                }
+            }
+            return paged;
         }
 
 
